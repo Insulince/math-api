@@ -1,0 +1,4 @@
+FROM alpine:latest
+WORKDIR /root/
+COPY ./addition-api/app .
+CMD ["./app"]

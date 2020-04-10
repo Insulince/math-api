@@ -1,0 +1,18 @@
+FROM golang:alpine
+MAINTAINER justinreusnow@gmail.com
+
+WORKDIR /go/src/math-api/subtraction-api
+
+# Copy in the base-api so we have access to the proper source code in our API.
+COPY ./base-api ../base-api
+
+COPY ./subtraction-api .
+
+RUN apk add git
+RUN go get ./cmd/srv
+
+# Sets the output binary to the instruction set compatible with Raspberry Pi.
+ENV GOOS=linux
+ENV GOARCH=arm
+
+RUN go build -o ./bin/app ./cmd/srv
